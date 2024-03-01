@@ -1,3 +1,4 @@
+/*
 // Importing module (just the PART)
 // import { addToCart, totalPrice as price, qt } from './shoppingCart.js';
 // addToCart('bread', 5);
@@ -44,3 +45,39 @@ console.log(lastPost);
 
 const lastPost2 = await getLastPost();
 console.log(lastPost2);
+*/
+
+///* MODULE PATTERN
+// To ENCAPSULATE functionality, to have private data, and exposed API. This is simply using function, by default, and allows us to return values which can become API.
+
+const ShoppingCart2 = (function () {
+  // PRIVATE STUFFS
+  const cart = [];
+  const shippingCost = 10;
+  const totalPrice = 237;
+  const totalQuantity = 23;
+
+  const addToCart = function (product, quantity) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product} added to cart`);
+  };
+
+  const orderStock = function (product, quantity) {
+    console.log(`${quantity} ${product} ordered from supplier`);
+  };
+
+  //   TO MAKE IT PUBLIC
+  return {
+    addToCart,
+    cart,
+    totalPrice,
+    totalQuantity,
+  };
+})();
+
+// Why IFE can still runs even if it was run at the start? because of CLOSURES - allows the functions to have variables that were present at the birthplace, so it never loses connections.
+
+ShoppingCart2.addToCart("apple", 4);
+ShoppingCart2.addToCart("pizza", 2);
+console.log(ShoppingCart2);
+console.log(ShoppingCart2.shippingCost); //You cannot access private stuffs
