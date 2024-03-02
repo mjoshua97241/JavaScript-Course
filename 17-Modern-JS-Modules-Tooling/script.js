@@ -45,7 +45,7 @@ console.log(lastPost);
 
 const lastPost2 = await getLastPost();
 console.log(lastPost2);
-*/
+
 
 ///* MODULE PATTERN
 // To ENCAPSULATE functionality, to have private data, and exposed API. This is simply using function, by default, and allows us to return values which can become API.
@@ -81,3 +81,15 @@ ShoppingCart2.addToCart("apple", 4);
 ShoppingCart2.addToCart("pizza", 2);
 console.log(ShoppingCart2);
 console.log(ShoppingCart2.shippingCost); //You cannot access private stuffs
+*/
+
+///* COMMON MODULES
+
+// Export
+export.addToCart = function (product, quantity) {
+  cart.push({ product, quantity });
+  console.log(`${quantity} ${product} added to cart`);
+};
+
+// Import
+const {addToCart} = require('./shoppingCart.js');
