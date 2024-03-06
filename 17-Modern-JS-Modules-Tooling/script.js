@@ -1,4 +1,3 @@
-/*
 // Importing module (just the PART)
 // import { addToCart, totalPrice as price, qt } from './shoppingCart.js';
 // addToCart('bread', 5);
@@ -20,7 +19,7 @@ add("bread", 5);
 add("apples", 4);
 
 console.log(cart); //imports are NOT copies of the exports
-
+/*
 ///* TOP LEVEL AWAIT
 // await can be use and working outside the async function but it should be use only on module (in index.html script type)
 ///?NOTE: BLOCKS the entire execution of this module. This can be useful, and can be harmful when running a long task.
@@ -96,7 +95,7 @@ const {addToCart} = require('./shoppingCart.js');
 */
 
 // import cloneDeep from "./lodash-es/cloneDeep.js";
-import cloneDeep from "./node_modules/lodash-es/cloneDeep.js";
+import cloneDeep from "lodash-es";
 
 const state = {
   cart: [
@@ -112,3 +111,7 @@ state.user.loggedIn = false;
 console.log(stateClone);
 
 console.log(stateDeepClone);
+
+if (module.hot) {
+  module.hot.accept();
+}
