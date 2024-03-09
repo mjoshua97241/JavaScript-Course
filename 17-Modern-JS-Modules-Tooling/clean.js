@@ -62,41 +62,64 @@ const newBudget2 = addExpense(
 );
 const newBudget3 = addExpense(newBudget2, spendingLimits, 200, "Stuff", "Jay");
 
-const checkExpenses = function (state, limits) {
-  // state.map();
-  // for (const entry of newBudget3) {
-  // Problem
-  // let limit;
-  // if (spendingLimits[entry.user]) {
-  //   limit = spendingLimits[entry.user];
-  // } else {
-  //   limit = 0;
-  // }
-  // Solution 1
-  // const limit = spendingLimits?.[entry.user] ?? 0;
-  // Solution 2
-  // if (entry.value < -getLimit(limits, entry.user)) entry.flag = "limit";
-  // }
-};
-checkExpenses(newBudget3, spendingLimits);
-console.log(newBudget3);
+// const checkExpenses = function (state, limits) {
+//   return state.map((entry) => {
+//     return entry.value < -getLimit(limits, entry.user)
+//       ? { ...entry, flag: "limit" }
+//       : entry;
+//   });
+// for (const entry of newBudget3) {
+// Problem
+// let limit;
+// if (spendingLimits[entry.user]) {
+//   limit = spendingLimits[entry.user];
+// } else {
+//   limit = 0;
+// }
+// Solution 1
+// const limit = spendingLimits?.[entry.user] ?? 0;
+// Solution 2
+// if (entry.value < -getLimit(limits, entry.user)) entry.flag = "limit";
+// }
+// };
+
+// Arrow Function
+// Creating a pure function - without side effects or without mutation.
+const checkExpenses = (state, limits) =>
+  state.map((entry) =>
+    entry.value < -getLimit(limits, entry.user)
+      ? { ...entry, flag: "limit" }
+      : entry
+  );
+
+const finalBudget = checkExpenses(newBudget3, spendingLimits);
+console.log(finalBudget);
 
 // console.log(budget);
 
-const logBigExpenses = function (bigLimit) {
-  let output = "";
+const logBigExpenses = function (state, bigLimit) {
+  const bigExpenses = state
+    .filter((entry) => entry.value <= -bigLimit)
+    .map((entry) => entry.description.slice(-2))
+    .join(" / ");
+  // .reduce((str, cur) => `${str} / ${cur.description.slice(-2)}`, "");
+
+  console.log(bigExpenses);
+  // let output = "";
   // Problem
   // if (entry.value <= -bigLimit) {
   //   output += `${entry.description.slice(-2)} / `; // Emojis are 2 chars
   // }
   // Solution #1
-  for (const entry of budget)
-    output +=
-      entry.value <= -bigLimit ? `${entry.description.slice(-2)} / ` : "";
+  // for (const entry of budget)
+  //   output +=
+  //     entry.value <= -bigLimit ? `${entry.description.slice(-2)} / ` : "";
 
-  output = output.slice(0, -2); // Remove last '/ '
-  console.log(output);
+  // output = output.slice(0, -2); // Remove last '/ '
+  // console.log(output);
 };
 
 // console.log(budget);
-logBigExpenses(500);
+logBigExpenses(finalBudget, 500);
+
+// As much as possible we put the console.log the end of the file
