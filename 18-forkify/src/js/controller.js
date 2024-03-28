@@ -1,12 +1,18 @@
 import * as model from './model.js';
-import recipeView from './views/recipeView.js';
+import recipeView from './views/recipeVIew.js';
 import searchView from './views/searchView.js';
 import SearchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 
 // import icons from '../img/icons.svg'; // Parcel 1
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { async } from 'regenerator-runtime';
+
+if (module.hot) {
+  module.hot.accept();
+}
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -34,6 +40,8 @@ const controlRecipes = async function () {
 
 const controlSearchResults = async function () {
   try {
+    resultsView.renderSpinner();
+
     // 1) Get search query
     const query = SearchView.getQuery();
     if (!query) return;
@@ -43,6 +51,7 @@ const controlSearchResults = async function () {
 
     // 3) Render results
     console.log(model.state.search.results);
+    resultsView.render(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
