@@ -3,6 +3,7 @@ import recipeView from './views/recipeVIew.js';
 import searchView from './views/searchView.js';
 import SearchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 // import icons from '../img/icons.svg'; // Parcel 1
 
@@ -52,14 +53,25 @@ const controlSearchResults = async function () {
     // resultsView.render(model.state.search.results);
 
     resultsView.render(model.getSearchResultsPage());
+
+    // 4) Render initial pagination buttons
+    paginationView.render(model.state.search);
   } catch (err) {
     console.log(err);
   }
 };
-controlSearchResults();
+
+const controlPagination = function (goToPage) {
+  //  1. Render NEW results
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  // 2) Render NEW pagination buttons
+  paginationView.render(model.state.search);
+};
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init();
