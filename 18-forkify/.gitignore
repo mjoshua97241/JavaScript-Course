@@ -16,3 +16,4 @@
 .prettierignore
 node_modules
 .parcel-cache
+dist
